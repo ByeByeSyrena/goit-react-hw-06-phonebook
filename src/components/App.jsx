@@ -29,19 +29,6 @@ function App() {
     dispatch(setFilter(event.target.value));
   };
 
-  const handleSubmit = (name, number) => {
-    const existingContact = contacts.find(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
-
-    if (existingContact) {
-      alert(`${name} is already in contacts`);
-      return;
-    }
-
-    dispatch(addContact({ id: nanoid(), name, number }));
-  };
-
   const handleRemove = contactId => {
     dispatch(deleteContact(contactId));
   };
@@ -57,7 +44,7 @@ function App() {
 
   return (
     <>
-      <ContactForm onSubmit={handleSubmit} />
+      <ContactForm />
       <Filter
         handleChange={handleChange}
         filter={filter}
