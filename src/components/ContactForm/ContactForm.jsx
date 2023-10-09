@@ -1,21 +1,17 @@
 import css from './ContactForm.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/actions';
-import { getContacts } from '../redux/selectors';
 
 const ContactForm = () => {
-  const contacts = useSelector(getContacts);
-
   const dispatch = useDispatch();
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (!name || !number) {
-      return;
-    }
+    const nameValue = event.target.name.value;
+    const numberValue = event.target.number.value;
 
-    dispatch(addContact(name, number));
+    dispatch(addContact(nameValue, numberValue));
 
     event.target.reset();
   };
@@ -29,7 +25,6 @@ const ContactForm = () => {
         name="name"
         title="Name may contain only letters, apostrophe, dash, and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
-        value={name}
         onChange={e =>
           dispatch({ type: 'UPDATE_NAME', payload: e.target.value })
         }
@@ -40,7 +35,6 @@ const ContactForm = () => {
         name="number"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
-        value={number}
         onChange={e =>
           dispatch({ type: 'UPDATE_NUMBER', payload: e.target.value })
         }
