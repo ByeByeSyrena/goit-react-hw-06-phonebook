@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from 'react';
 import 'normalize.css';
 import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts, initialFilter } from 'redux/selectors';
 
 function App() {
-  const [contacts, setContacts] = useState(() => {
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(initialFilter);
+  const dispatch = useDispatch();
+
+  const storageOLd = () => {
     const savedContacts = localStorage.getItem('contacts');
     return savedContacts ? JSON.parse(savedContacts) : [];
-  });
-
-  const [filter, setFilter] = useState('');
+  };
 
   const loginInputId = nanoid();
 
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  localStorage.setItem('contacts', JSON.stringify(contacts));
 
   const handleChange = event => {
     const { value } = event.target;
-    setFilter(value);
+    return value;
   };
 
   const handleSubmit = (name, number) => {
