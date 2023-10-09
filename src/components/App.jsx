@@ -1,28 +1,32 @@
-import 'normalize.css';
+import React, { useEffect } from 'react';
 import { nanoid } from 'nanoid';
+import { useSelector, useDispatch } from 'react-redux';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
-import { useSelector, useDispatch } from 'react-redux';
-import { getContacts, initialFilter } from 'redux/selectors';
+import { getContacts, initialFilter } from '../redux/selectors';
+import { addContact, deleteContact, setFilter } from '../redux/actions';
 
 function App() {
   const contacts = useSelector(getContacts);
   const filter = useSelector(initialFilter);
   const dispatch = useDispatch();
 
-  const storageOLd = () => {
+  useEffect(() => {
     const savedContacts = localStorage.getItem('contacts');
-    return savedContacts ? JSON.parse(savedContacts) : [];
-  };
+    if (savedContacts) {
+      dispatch(addContact(JSON.parse(savedContacts)));
+    }
+  }, [dispatch]);
 
   const loginInputId = nanoid();
 
-  localStorage.setItem('contacts', JSON.stringify(contacts));
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const handleChange = event => {
-    const { value } = event.target;
-    return value;
+    dispatch(setFilter(event.target.value));
   };
 
   const handleSubmit = (name, number) => {
@@ -35,34 +39,18 @@ function App() {
       return;
     }
 
-    const newContact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-
-    setContacts(prevContacts => [...prevContacts, newContact]);
-    reset();
+    dispatch(addContact({ id: nanoid(), name, number }));
   };
 
   const handleRemove = contactId => {
-    const updatedContacts = contacts.filter(
-      contact => contact.id !== contactId
-    );
-
-    setContacts(updatedContacts);
+    dispatch(deleteContact(contactId));
   };
 
   const showSelectedContact = () => {
     const normalizedFilter = filter.toLowerCase();
-
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
-  };
-
-  const reset = () => {
-    setFilter('');
   };
 
   const filteredContacts = showSelectedContact();

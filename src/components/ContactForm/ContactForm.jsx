@@ -1,11 +1,11 @@
 import css from './ContactForm.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getName, getNumber } from 'redux/selectors';
 import { addContact } from 'redux/actions';
+import { getContacts } from '../redux/selectors';
 
 const ContactForm = () => {
-  const name = useSelector(getName);
-  const number = useSelector(getNumber);
+  const contacts = useSelector(getContacts);
+
   const dispatch = useDispatch();
 
   const handleSubmit = event => {
