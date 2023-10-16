@@ -7,6 +7,8 @@ const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
 
+  console.log(contacts);
+
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -14,7 +16,7 @@ const ContactForm = () => {
     const numberValue = event.target.number.value;
 
     const existingContact = contacts.find(
-      contact => contact.name.toLowerCase() === nameValue.toLowerCase()
+      ({ name }) => name.toLowerCase() === nameValue.toLowerCase()
     );
 
     if (existingContact) {

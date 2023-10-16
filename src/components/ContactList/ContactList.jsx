@@ -1,7 +1,7 @@
 import SelectedContact from 'components/SelectedContact/SelectedContact';
 import css from './ContactList.module.css';
 
-const ContactForm = ({ filteredContacts, handleRemove }) => {
+const ContactList = ({ filteredContacts, handleRemove }) => {
   return (
     <ul className={css.list}>
       {filteredContacts.map(contact => (
@@ -18,4 +18,4 @@ const ContactForm = ({ filteredContacts, handleRemove }) => {
   );
 };
 
-export default ContactForm;
+export default ContactList;
