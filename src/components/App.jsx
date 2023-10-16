@@ -35,9 +35,12 @@ function App() {
 
   const showSelectedContact = () => {
     const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
+    return contacts.filter(({ name }) => {
+      if (typeof name === 'string') {
+        return name.toLowerCase().includes(normalizedFilter);
+      }
+      return false;
+    });
   };
 
   const filteredContacts = showSelectedContact();
