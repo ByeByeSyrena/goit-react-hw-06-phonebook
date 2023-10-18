@@ -14,6 +14,7 @@ const ContactForm = () => {
 
     const nameValue = event.target.name.value;
     const numberValue = event.target.number.value;
+    console.log(numberValue);
 
     if (nameValue) {
       const existingContact = contacts.find(
@@ -40,9 +41,6 @@ const ContactForm = () => {
         name="name"
         title="Name may contain only letters, apostrophe, dash, and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
-        onChange={e =>
-          dispatch({ type: 'UPDATE_NAME', payload: e.target.value })
-        }
       />
       <h3>Number</h3>
       <input
@@ -50,9 +48,6 @@ const ContactForm = () => {
         name="number"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
-        onChange={e =>
-          dispatch({ type: 'UPDATE_NUMBER', payload: e.target.value })
-        }
       />
       <button type="submit" className={css.buttonAddContact}>
         Add contact
