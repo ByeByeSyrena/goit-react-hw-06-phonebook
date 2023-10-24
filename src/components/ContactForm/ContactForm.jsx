@@ -14,7 +14,6 @@ const ContactForm = () => {
 
     const nameValue = event.target.name.value;
     const numberValue = event.target.number.value;
-    console.log(numberValue);
 
     if (nameValue) {
       const existingContact = contacts.find(
