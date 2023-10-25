@@ -15,8 +15,9 @@ const getVisibleContacts = (contacts, normalizedFilter) => {
 const ContactList = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(initialFilter);
-  const normalizedFilter = filter.toLowerCase();
+  const normalizedFilter = filter ? filter.toLowerCase() : '';
   const visibleContacts = getVisibleContacts(contacts, normalizedFilter);
+
   return (
     <ul className={css.list}>
       {visibleContacts.map(contact => (
